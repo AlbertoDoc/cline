@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:cline/widgets/input_field/round_selected_box.dart';
+import 'package:cline/widgets/select_box/round_selected_box.dart';
 import 'package:flutter/material.dart';
 
 class SelectBoxState {
@@ -15,15 +15,22 @@ class SelectBoxState {
 
 abstract class HomeController {
   Stream<List<SelectBoxState>> get selectState;
+  Stream<String> get searchState;
+
+  void onSearchChange(String text);
   void onSelectHandler({SelectBoxType type = SelectBoxType.clinic});
   void dispose();
 }
 
 class HomeControllerImpl extends HomeController {
   final _selectBoxController = StreamController<List<SelectBoxState>>();
+  final _searchFieldController = StreamController<String>();
 
   @override
   Stream<List<SelectBoxState>> get selectState => _selectBoxController.stream;
+
+  @override
+  Stream<String> get searchState => _searchFieldController.stream;
 
   @override
   void onSelectHandler({SelectBoxType type = SelectBoxType.clinic}) {
@@ -33,7 +40,15 @@ class HomeControllerImpl extends HomeController {
   }
 
   @override
+  void onSearchChange(String text) {
+    print("pesquisei");
+    // TODO integration with api and apply debouncer
+    _searchFieldController.add(text);
+  }
+
+  @override
   void dispose() {
+    _searchFieldController.close();
     _selectBoxController.close();
   }
 

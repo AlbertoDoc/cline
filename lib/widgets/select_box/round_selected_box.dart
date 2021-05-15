@@ -10,16 +10,22 @@ enum SelectBoxType {
 class RoundSelectedBox extends StatelessWidget {
   final SelectBoxType type;
   final Function tapHandler;
+  final Function searchHandler;
+  final TextEditingController searchController;
   final bool selected;
 
   RoundSelectedBox({
     @required this.type,
     @required this.tapHandler,
+    @required this.searchHandler,
+    @required this.searchController,
     @required this.selected,
   });
 
   void _tapHandlerWrapper() {
     tapHandler(type: type);
+
+    searchHandler(searchController.text);
   }
 
   @override

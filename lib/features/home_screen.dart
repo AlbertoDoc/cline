@@ -1,6 +1,6 @@
 import 'package:cline/features/home_controller.dart';
 import 'package:cline/widgets/input_field/input_search_field.dart';
-import 'package:cline/widgets/input_field/round_selected_box.dart';
+import 'package:cline/widgets/select_box/round_selected_box.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,6 +10,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final HomeController _controller = HomeControllerImpl();
+  final TextEditingController _searchController = TextEditingController();
+  SelectBoxType _selectedBox = SelectBoxType.clinic;
 
   @override
   void initState() {
@@ -23,11 +25,25 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            InputSearchField(),
+            _searchField(),
             _optionRow(),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _searchField() {
+    return StreamBuilder<String>(
+      stream: _controller.searchState,
+      initialData: '',
+      builder: (context, snapshot) {
+        return InputSearchField(
+          controller: _searchController,
+          onChanged: _controller.onSearchChange,
+          selectType: _selectedBox,
+        );
+      },
     );
   }
 
@@ -37,16 +53,18 @@ class _HomePageState extends State<HomePage> {
       initialData: [],
       builder: (context, snapshot) {
         final boxStates = snapshot.data;
+        final boxWidgetList = boxStates.map((boxState) {
+          if (boxState.selected) _selectedBox = boxState.type;
+          return RoundSelectedBox(
+            type: boxState.type,
+            tapHandler: _controller.onSelectHandler,
+            searchController: _searchController,
+            searchHandler: _controller.onSearchChange,
+            selected: boxState.selected,
+          );
+        }).toList();
         return Row(
-          children: <Widget>[
-            ...boxStates.map((boxState) {
-              return RoundSelectedBox(
-                type: boxState.type,
-                tapHandler: _controller.onSelectHandler,
-                selected: boxState.selected,
-              );
-            }).toList()
-          ],
+          children: boxWidgetList,
         );
       },
     );

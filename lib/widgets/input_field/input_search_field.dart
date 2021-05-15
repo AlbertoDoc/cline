@@ -1,16 +1,28 @@
 import 'package:cline/core/values/cline_colors.dart';
 import 'package:cline/core/values/text_styles.dart';
+import 'package:cline/widgets/select_box/round_selected_box.dart';
 import 'package:flutter/material.dart';
 
-class InputSearchField extends StatefulWidget {
-  @override
-  _InputSearchFieldState createState() => _InputSearchFieldState();
-}
+class InputSearchField extends StatelessWidget {
+  final TextEditingController controller;
+  final Function onChanged;
+  final SelectBoxType selectType;
 
-class _InputSearchFieldState extends State<InputSearchField> {
+  InputSearchField({
+    @required this.controller,
+    @required this.onChanged,
+    @required this.selectType,
+  });
+
+  void onChangedWrapper(String text) {
+    onChanged(controller.text);
+  }
+
   @override
   Widget build(BuildContext context) {
     return TextField(
+      onChanged: onChangedWrapper,
+      controller: controller,
       style: TextStyles.inputField,
       keyboardType: TextInputType.visiblePassword,
       decoration: InputDecoration(
