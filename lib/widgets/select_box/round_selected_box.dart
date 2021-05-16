@@ -1,4 +1,5 @@
 import 'package:cline/core/values/cline_colors.dart';
+import 'package:cline/core/values/text_styles.dart';
 import 'package:flutter/material.dart';
 
 enum SelectBoxType {
@@ -32,17 +33,47 @@ class RoundSelectedBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: _tapHandlerWrapper,
-      child: Container(
-        height: 60,
-        width: 60,
-        decoration: BoxDecoration(
-          color: selected ? ClineColors.main_primary : ClineColors.unselect_box,
-          borderRadius: BorderRadius.all(
-            Radius.circular(50),
+      child: Column(
+        children: <Widget>[
+          Container(
+            height: 50,
+            width: 50,
+            decoration: BoxDecoration(
+              color: selected
+                  ? ClineColors.main_primary
+                  : ClineColors.unselect_box,
+              borderRadius: BorderRadius.all(
+                Radius.circular(50),
+              ),
+            ),
+            child: _iconBox(),
           ),
-        ),
-        child: _iconBox(),
+          SizedBox(
+            height: 5,
+          ),
+          _textInfo(),
+        ],
       ),
+    );
+  }
+
+  Widget _textInfo() {
+    String info;
+    switch (type) {
+      case SelectBoxType.clinic:
+        info = 'Clínica';
+        break;
+      case SelectBoxType.doctor:
+        info = 'Médico';
+        break;
+      default:
+        info = 'Especialidade';
+        break;
+    }
+
+    return Text(
+      info,
+      style: TextStyles.selectInfoText,
     );
   }
 
@@ -61,7 +92,7 @@ class RoundSelectedBox extends StatelessWidget {
     }
     return Icon(
       icon,
-      size: 40,
+      size: 30,
       color: ClineColors.white,
     );
   }

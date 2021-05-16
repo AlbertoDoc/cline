@@ -7,4 +7,5 @@ class ClineColors {
   static const Color input_hint = Color(0XFF9B9B9B);
   static const Color input_text = Color(0XFF565656);
   static const Color unselect_box = Color(0XFFC4C4C4);
+  static const Color clinic_box = Color(0XFFDDE1FF);
 }

@@ -1,17 +1,7 @@
 import 'dart:async';
 
+import 'package:cline/models/select_box_state.dart';
 import 'package:cline/widgets/select_box/round_selected_box.dart';
-import 'package:flutter/material.dart';
-
-class SelectBoxState {
-  final SelectBoxType type;
-  final bool selected;
-
-  SelectBoxState({
-    @required this.type,
-    @required this.selected,
-  });
-}
 
 abstract class HomeController {
   Stream<List<SelectBoxState>> get selectState;
