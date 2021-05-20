@@ -48,6 +48,7 @@ class _ClinicOverviewPageState extends State<ClinicOverviewPage> {
         Text("R. Barros Falcão - nº 365 - Matatu Salvador - BA"),
         SizedBox(height: 10,),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.phone),
             Text("(71) 3233- 3315")
