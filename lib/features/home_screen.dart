@@ -1,6 +1,5 @@
 import 'package:cline/core/values/cline_colors.dart';
 import 'package:cline/core/values/dimens.dart';
-import 'package:cline/features/clinicOverview/clinic_overview_screen.dart';
 import 'package:cline/features/home_controller.dart';
 import 'package:cline/models/select_box_state.dart';
 import 'package:cline/widgets/cards/custom_card.dart';
@@ -133,15 +132,5 @@ class _HomePageState extends State<HomePage> {
       width: MediaQuery.of(context).size.width * 0.5,
       color: ClineColors.main_primary,
     );
-  }
-
-  String _chooseSelectedBoxText(SelectBoxState boxState) {
-    if (boxState.type == SelectBoxType.clinic) {
-      return "Clínica";
-    } else if (boxState.type == SelectBoxType.specialty) {
-      return "Especialidade";
-    } else {
-      return "Médico";
-    }
   }
 }
