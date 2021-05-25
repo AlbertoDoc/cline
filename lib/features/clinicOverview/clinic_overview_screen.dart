@@ -1,6 +1,7 @@
 import 'package:cline/core/values/cline_colors.dart';
 import 'package:cline/features/clinicOverview/clinic_overview_controller.dart';
 import 'package:cline/features/queue/queue_screen.dart';
+import 'package:cline/models/clinic.dart';
 import 'package:cline/widgets/input_field/input_search_field_clinic.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,8 @@ class ClinicOverviewPage extends StatefulWidget {
 class _ClinicOverviewPageState extends State<ClinicOverviewPage> {
   final ClinicOverviewController _controller = ClinicOverviewImpl();
   final TextEditingController _searchController = TextEditingController();
+  
+  Clinic clinic = new Clinic(1, "Clínica Santa Bárbara", "R. Barros Falcão - nº 365 - Matatu Salvador - BA", "(71) 3233- 3315");
 
   @override
   Widget build(BuildContext context) {
@@ -46,20 +49,20 @@ class _ClinicOverviewPageState extends State<ClinicOverviewPage> {
   Widget _clinicInfo() {
     return Column(
       children: [
-        Text("Clínica Santa Bárbara",
+        Text(clinic.name,
           style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold
           ),
         ),
         SizedBox(height: 20,),
-        Text("R. Barros Falcão - nº 365 - Matatu Salvador - BA"),
+        Text(clinic.address),
         SizedBox(height: 20,),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.phone),
-            Text("(71) 3233- 3315")
+            Text(clinic.phone,)
           ],
         )
       ],
