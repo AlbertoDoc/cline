@@ -121,7 +121,7 @@ class _ClinicOverviewPageState extends State<ClinicOverviewPage> {
         child: Row(
           children: [
             SizedBox(width: 5,),
-            Icon(Icons.thumb_up_alt),
+            Icon(Icons.verified, color: Colors.green,),
             SizedBox(width: 5,),
             Text("Dr. Fulano de Tal")
           ],
