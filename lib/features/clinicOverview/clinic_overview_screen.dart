@@ -2,8 +2,27 @@ import 'package:cline/core/values/cline_colors.dart';
 import 'package:cline/features/clinicOverview/clinic_overview_controller.dart';
 import 'package:cline/features/queue/queue_screen.dart';
 import 'package:cline/models/clinic.dart';
+import 'package:cline/widgets/cards/doctor_card.dart';
+import 'package:cline/widgets/cards/specialization_card.dart';
 import 'package:cline/widgets/input_field/input_search_field_clinic.dart';
 import 'package:flutter/material.dart';
+
+final list = [
+  SpecializationCard(),
+  DoctorCard(),
+  DoctorCard(),
+  DoctorCard(),
+  DoctorCard(),
+  DoctorCard(),
+  DoctorCard(),
+  DoctorCard(),
+  DoctorCard(),
+  DoctorCard(),
+  SpecializationCard(),
+  DoctorCard(),
+  SpecializationCard(),
+  DoctorCard()
+];
 
 class ClinicOverviewPage extends StatefulWidget {
   @override
@@ -32,14 +51,7 @@ class _ClinicOverviewPageState extends State<ClinicOverviewPage> {
                 ],
               ),
             ),
-            _specializationContainer(),
-            _doctorContainer(),
-            ElevatedButton(onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => QueuePage())
-              );
-            })
-            //_doctorsList()
+            Expanded(child: _doctorsList()),
           ],
         ),
       ),
@@ -86,59 +98,12 @@ class _ClinicOverviewPageState extends State<ClinicOverviewPage> {
     );
   }
 
-  // Specialization Container Style
-  Widget _specializationContainer() {
-    return Align(
-      alignment: Alignment(-1.0, 0.0),
-      child: Container(
-        height: 40,
-        width: MediaQuery.of(context).size.width * 0.85,
-        decoration: BoxDecoration(
-          color: ClineColors.specialization_container,
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(50),
-            bottomRight: Radius.circular(50)
-          )
-        ),
-        child: Center(
-            child: Text(
-              "Dermatologia",
-              style: TextStyle(
-                  color: ClineColors.white,
-                  fontSize: 20
-              ),
-            )
-        ),
-      ),
-    );
-  }
-
-  // Doctor Container Style
-  Widget _doctorContainer() {
-    return Align(
-      alignment: Alignment(-1.0, 0.0),
-      child: Container(
-        height: 50,
-        width: MediaQuery.of(context).size.width,
-        color: ClineColors.doctor_container,
-        child: Row(
-          children: [
-            SizedBox(width: 5,),
-            Icon(Icons.verified, color: Colors.green,),
-            SizedBox(width: 5,),
-            Text("Dr. Fulano de Tal")
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _doctorsList() {
     return ListView.builder(
-      itemCount: 3,
+      itemCount: list.length,
       scrollDirection: Axis.vertical,
       itemBuilder: (context, index) {
-        // TODO build list item
+        return list[index];
       }
     );
   }
