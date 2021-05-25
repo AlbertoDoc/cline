@@ -1,5 +1,6 @@
 import 'package:cline/core/values/cline_colors.dart';
 import 'package:cline/features/clinicOverview/clinic_overview_controller.dart';
+import 'package:cline/features/queue/queue_screen.dart';
 import 'package:cline/widgets/input_field/input_search_field_clinic.dart';
 import 'package:flutter/material.dart';
 
@@ -22,12 +23,19 @@ class _ClinicOverviewPageState extends State<ClinicOverviewPage> {
               child: Column(
                 children: [
                   _clinicInfo(),
-                  _searchField()
+                  SizedBox(height: 20,),
+                  _searchField(),
+                  SizedBox(height: 20,),
                 ],
               ),
             ),
             _specializationContainer(),
             _doctorContainer(),
+            ElevatedButton(onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => QueuePage())
+              );
+            })
             //_doctorsList()
           ],
         ),
@@ -44,10 +52,11 @@ class _ClinicOverviewPageState extends State<ClinicOverviewPage> {
               fontWeight: FontWeight.bold
           ),
         ),
-        SizedBox(height: 10,),
+        SizedBox(height: 20,),
         Text("R. Barros Falcão - nº 365 - Matatu Salvador - BA"),
-        SizedBox(height: 10,),
+        SizedBox(height: 20,),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.phone),
             Text("(71) 3233- 3315")
@@ -58,16 +67,19 @@ class _ClinicOverviewPageState extends State<ClinicOverviewPage> {
   }
 
   Widget _searchField() {
-    return StreamBuilder<String>(
-        stream: _controller.searchState,
-        initialData: '',
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+      child: StreamBuilder<String>(
+          stream: _controller.searchState,
+          initialData: '',
 
-        builder: (context, snapshot) {
-          return InputSearchFieldClinic(
-              controller: _searchController,
-              onChanged: _controller.onSearchChange
-          );
-        }
+          builder: (context, snapshot) {
+            return InputSearchFieldClinic(
+                controller: _searchController,
+                onChanged: _controller.onSearchChange
+            );
+          }
+      ),
     );
   }
 
