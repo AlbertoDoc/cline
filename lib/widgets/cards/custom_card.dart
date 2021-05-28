@@ -3,11 +3,16 @@ import 'package:cline/core/values/cline_colors.dart';
 import 'package:cline/core/values/dimens.dart';
 import 'package:cline/core/values/text_styles.dart';
 import 'package:cline/features/clinicOverview/clinic_overview_screen.dart';
-import 'package:cline/models/clinic.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 class CustomCard extends StatelessWidget {
+
+  final String clinicId;
+  final String clinicName;
+
+  CustomCard(this.clinicId, this.clinicName);
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -25,7 +30,7 @@ class CustomCard extends StatelessWidget {
               _cardImage(context),
               _cardInfo(
                 context,
-                text: 'Clínica Santa Bárbara',
+                text: clinicName,
               ),
             ],
           ),

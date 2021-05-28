@@ -7,7 +7,7 @@ import 'package:cline/widgets/input_field/input_search_field.dart';
 import 'package:cline/widgets/select_box/round_selected_box.dart';
 import 'package:flutter/material.dart';
 
-final list = [
+/*final list = [
   CustomCard(),
   CustomCard(),
   CustomCard(),
@@ -23,7 +23,7 @@ final list = [
   CustomCard(),
   CustomCard(),
   CustomCard(),
-];
+];*/
 
 class HomePage extends StatefulWidget {
   @override
@@ -113,16 +113,26 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _searchList() {
-    return GridView.builder(
-      padding: EdgeInsets.all(5),
-      itemCount: list.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: Dimens.item_per_row,
-        childAspectRatio: 1,
-      ),
-      itemBuilder: (context, index) {
-        return list[index];
-      },
+    return StreamBuilder<List<CustomCard>>(
+        stream: _controller.listState,
+        initialData: [],
+        builder: (context, snapshot) {
+          final clinicList = snapshot.data;
+          final clinicWidgetList = clinicList.map((clinicWidget) {
+          return CustomCard(clinicWidget.clinicId, clinicWidget.clinicName);
+        }).toList();
+        return GridView.builder(
+          padding: EdgeInsets.all(5),
+          itemCount: clinicWidgetList.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: Dimens.item_per_row,
+            childAspectRatio: 1,
+          ),
+          itemBuilder: (context, index) {
+            return clinicWidgetList[index];
+          }
+        );
+      }
     );
   }
 

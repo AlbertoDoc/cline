@@ -2,6 +2,7 @@
     package="com.example.cline">
    <application
         android:label="cline"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

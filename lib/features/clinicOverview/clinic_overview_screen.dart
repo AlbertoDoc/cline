@@ -33,7 +33,7 @@ class _ClinicOverviewPageState extends State<ClinicOverviewPage> {
   final ClinicOverviewController _controller = ClinicOverviewImpl();
   final TextEditingController _searchController = TextEditingController();
   
-  Clinic clinic = new Clinic(1, "Clínica Santa Bárbara", "R. Barros Falcão - nº 365 - Matatu Salvador - BA", "(71) 3233- 3315");
+  Clinic clinic = new Clinic("1", "Clínica Santa Bárbara", "R. Barros Falcão - nº 365 - Matatu Salvador - BA", "(71) 3233- 3315");
 
   @override
   Widget build(BuildContext context) {
