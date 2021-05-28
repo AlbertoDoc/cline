@@ -7,24 +7,6 @@ import 'package:cline/widgets/input_field/input_search_field.dart';
 import 'package:cline/widgets/select_box/round_selected_box.dart';
 import 'package:flutter/material.dart';
 
-/*final list = [
-  CustomCard(),
-  CustomCard(),
-  CustomCard(),
-  CustomCard(),
-  CustomCard(),
-  CustomCard(),
-  CustomCard(),
-  CustomCard(),
-  CustomCard(),
-  CustomCard(),
-  CustomCard(),
-  CustomCard(),
-  CustomCard(),
-  CustomCard(),
-  CustomCard(),
-];*/
-
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
