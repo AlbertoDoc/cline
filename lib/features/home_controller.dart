@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:cline/features/service/clinic_service.dart';
 import 'package:cline/models/select_box_state.dart';
+import 'package:cline/services/clinic_service.dart';
 import 'package:cline/widgets/cards/custom_card.dart';
 import 'package:cline/widgets/select_box/round_selected_box.dart';
 

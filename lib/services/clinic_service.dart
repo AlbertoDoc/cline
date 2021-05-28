@@ -1,8 +1,9 @@
 import 'dart:convert';
 
-import 'package:cline/features/service/API.dart';
 import 'package:cline/models/clinic.dart';
 import 'package:http/http.dart' as http;
+
+import 'API.dart';
 
 class ClinicService {
   static Future<List<Clinic>> searchClinic(String searchString) async {
