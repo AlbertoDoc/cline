@@ -23,12 +23,23 @@ class LineService {
   }
 
   static Future<List<Patient>> getLine(String clinicId, String doctorId) async {
+    List<Patient> patients = [];
+
     await http.get(
       Uri.parse(API.BASE_URL + clinicId + "doctors/" + doctorId + "/line"),
     ).then((response) {
-      print(response);
+      if (response.statusCode == 200) {
+        var body = response.body;
+        var patientsJson = jsonDecode(body)["data"]["line"]["patients"];
 
+        for (var item in patientsJson) {
+          patients.add(new Patient(
+              item["id"], item["waitingTime"], item["name"], item["position"])
+          );
+        }
+      }
     });
 
+    return patients;
   }
 }

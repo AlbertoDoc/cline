@@ -167,5 +167,6 @@ class _QueuePageState extends State<QueuePage> {
     super.initState();
     _controller.onClinicInfoChange(widget.clinicId);
     _controller.onDoctorNameChange(widget.clinicId, widget.doctorId);
+    _controller.onPatientListChange(widget.clinicId, widget.doctorId);
   }
 }

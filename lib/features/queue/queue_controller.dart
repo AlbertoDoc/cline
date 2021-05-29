@@ -58,7 +58,11 @@ class QueueImpl extends QueueController {
 
   @override
   void onPatientListChange(String clinicId, String doctorId) {
-
+    LineService.getLine(clinicId, doctorId)
+        .then((value) {
+          print(value);
+          _patientListController.sink.add(value);
+    });
   }
 
   @override
