@@ -1,6 +1,7 @@
 class Doctor {
-  int id;
+  String id;
   String name;
+  bool isAttendingToday;
 
-  Doctor(this.id, this.name);
+  Doctor(this.id, this.name, this.isAttendingToday);
 }

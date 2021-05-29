@@ -1,10 +1,6 @@
-import 'package:cline/core/values/cline_colors.dart';
 import 'package:cline/features/clinicOverview/clinic_overview_controller.dart';
-import 'package:cline/features/queue/queue_screen.dart';
 import 'package:cline/models/clinic.dart';
-import 'package:cline/services/clinic_service.dart';
 import 'package:cline/widgets/cards/doctor_card.dart';
-import 'package:cline/widgets/cards/specialization_card.dart';
 import 'package:cline/widgets/input_field/input_search_field_clinic.dart';
 import 'package:flutter/material.dart';
 
@@ -99,7 +95,7 @@ class _ClinicOverviewPageState extends State<ClinicOverviewPage> {
         builder: (context, snapshot) {
           final doctorsList = snapshot.data;
           final doctorsListWidget = doctorsList.map((doctor) {
-            return DoctorCard(doctor.id, doctor.name);
+            return DoctorCard(doctor.id, doctor.name, doctor.isAttendingToday);
           }).toList();
           return ListView.builder(
               itemCount: doctorsListWidget.length,

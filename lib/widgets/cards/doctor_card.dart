@@ -6,8 +6,9 @@ class DoctorCard extends StatelessWidget {
 
   final String id;
   final String name;
+  final bool isAttendingToday;
 
-  DoctorCard(this.id, this.name);
+  DoctorCard(this.id, this.name, this.isAttendingToday);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,10 @@ class DoctorCard extends StatelessWidget {
           child: Row(
             children: [
               SizedBox(width: 5,),
-              Icon(Icons.verified, color: Colors.green,),
+              Icon(
+                isAttendingToday ? Icons.verified : Icons.close,
+                color: isAttendingToday ? Colors.green : Colors.red,
+              ),
               SizedBox(width: 5,),
               Text(name)
             ],
