@@ -1,12 +1,25 @@
 import 'package:cline/core/values/cline_colors.dart';
+import 'package:cline/features/queue/queue_controller.dart';
+import 'package:cline/models/clinic.dart';
+import 'package:cline/models/patient.dart';
+import 'package:cline/widgets/cards/patient_card.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class QueuePage extends StatefulWidget {
+  
+  final String doctorId;
+  final String clinicId;
+
+  QueuePage(this.doctorId, this.clinicId);
+
   @override
   _QueuePageState createState() => _QueuePageState();
 }
 
 class _QueuePageState extends State<QueuePage> {
+
+  final _controller = QueueImpl();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +37,8 @@ class _QueuePageState extends State<QueuePage> {
             SizedBox(height: 15,),
             _doctorView(),
             _listHeader(),
-            _queue()
+            _divider(),
+            Expanded(child: _queue())
           ],
         ),
       ),
@@ -32,47 +46,60 @@ class _QueuePageState extends State<QueuePage> {
   }
 
   Widget _clinicInfo() {
-    return Column(
-      children: [
-        Text("Clínica Santa Bárbara",
-          style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold
-          ),
-        ),
-        SizedBox(height: 20,),
-        Text("R. Barros Falcão - nº 365 - Matatu Salvador - BA"),
-        SizedBox(height: 20,),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.phone),
-            Text("(71) 3233- 3315")
-          ],
-        )
-      ],
+    return StreamBuilder<Clinic>(
+        stream: _controller.clinicInfoState,
+        builder: (context, snapshot) {
+          final clinic = snapshot.data;
+          return Column(
+            children: [
+              Text(clinic == null ? "" : clinic.name,
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold
+                ),
+              ),
+              SizedBox(height: 20,),
+              Text(clinic == null ? "" : clinic.address),
+              SizedBox(height: 20,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.phone),
+                  Text(clinic == null ? "" : clinic.phone,)
+                ],
+              )
+            ],
+          );
+        }
     );
   }
 
   Widget _doctorView() {
-    return Align(
-      alignment: Alignment(-1.0, 0.0),
-      child: Container(
-        height: 50,
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-            color: ClineColors.specialization_container,
-        ),
-        child: Center(
-            child: Text(
-              "Dr. Fulano de Tal",
-              style: TextStyle(
-                  color: ClineColors.white,
-                  fontSize: 20
+    return StreamBuilder<String>(
+        stream: _controller.doctorNameState,
+        initialData: "",
+        builder: (context, snapshot) {
+          final String doctorName = snapshot.data;
+          return Align(
+            alignment: Alignment(-1.0, 0.0),
+            child: Container(
+              height: 50,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                color: ClineColors.specialization_container,
               ),
-            )
-        ),
-      ),
+              child: Center(
+                  child: Text(
+                    doctorName,
+                    style: TextStyle(
+                        color: ClineColors.white,
+                        fontSize: 20
+                    ),
+                  )
+              ),
+            ),
+          );
+        }
     );
   }
 
@@ -105,18 +132,40 @@ class _QueuePageState extends State<QueuePage> {
     );
   }
 
-  Widget _queue() {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 13, right: 13, top: 10),
-          child: Divider(
-            thickness: 2,
-            color: Colors.black,
-          ),
-        ),
-        //ListView()
-      ],
+  Widget _divider() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 13, right: 13, top: 10),
+      child: Divider(
+        thickness: 2,
+        color: Colors.black,
+      ),
     );
+  }
+
+  Widget _queue() {
+    return StreamBuilder<List<Patient>>(
+      stream: _controller.patientListState,
+        initialData: [],
+        builder: (context, snapshot) {
+          final listPatient = snapshot.data;
+          final listPatientWidget = listPatient.map((item) {
+            return PatientCard(item.name);
+          }).toList();
+          return ListView.builder(
+              itemCount: listPatientWidget.length,
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) {
+                return listPatientWidget[index];
+              }
+          );
+        }
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.onClinicInfoChange(widget.clinicId);
+    _controller.onDoctorNameChange(widget.clinicId, widget.doctorId);
   }
 }

@@ -8,7 +8,9 @@ class DoctorCard extends StatelessWidget {
   final String name;
   final bool isAttendingToday;
 
-  DoctorCard(this.id, this.name, this.isAttendingToday);
+  final String clinicId;
+
+  DoctorCard(this.id, this.name, this.isAttendingToday, this.clinicId);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class DoctorCard extends StatelessWidget {
         child: InkWell(
           onTap: () {
             Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => QueuePage())
+                MaterialPageRoute(builder: (context) => QueuePage(id, clinicId))
             );
           },
           child: Row(

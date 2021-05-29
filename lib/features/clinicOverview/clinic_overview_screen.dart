@@ -95,7 +95,9 @@ class _ClinicOverviewPageState extends State<ClinicOverviewPage> {
         builder: (context, snapshot) {
           final doctorsList = snapshot.data;
           final doctorsListWidget = doctorsList.map((doctor) {
-            return DoctorCard(doctor.id, doctor.name, doctor.isAttendingToday);
+            return DoctorCard(
+                doctor.id, doctor.name, doctor.isAttendingToday, widget.clinicId
+            );
           }).toList();
           return ListView.builder(
               itemCount: doctorsListWidget.length,
