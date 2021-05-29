@@ -20,7 +20,7 @@ class CustomCard extends StatelessWidget {
       child: InkWell(
         onTap: () => {
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => ClinicOverviewPage())
+            MaterialPageRoute(builder: (context) => ClinicOverviewPage(clinicId))
           )
         },
         child: Card(

@@ -2,38 +2,26 @@ import 'package:cline/core/values/cline_colors.dart';
 import 'package:cline/features/clinicOverview/clinic_overview_controller.dart';
 import 'package:cline/features/queue/queue_screen.dart';
 import 'package:cline/models/clinic.dart';
+import 'package:cline/services/clinic_service.dart';
 import 'package:cline/widgets/cards/doctor_card.dart';
 import 'package:cline/widgets/cards/specialization_card.dart';
 import 'package:cline/widgets/input_field/input_search_field_clinic.dart';
 import 'package:flutter/material.dart';
 
-final list = [
-  SpecializationCard(),
-  DoctorCard(),
-  DoctorCard(),
-  DoctorCard(),
-  DoctorCard(),
-  DoctorCard(),
-  DoctorCard(),
-  DoctorCard(),
-  DoctorCard(),
-  DoctorCard(),
-  SpecializationCard(),
-  DoctorCard(),
-  SpecializationCard(),
-  DoctorCard()
-];
-
 class ClinicOverviewPage extends StatefulWidget {
+
+  final String clinicId;
+
+  ClinicOverviewPage(this.clinicId);
+
   @override
   _ClinicOverviewPageState createState() => _ClinicOverviewPageState();
 }
 
 class _ClinicOverviewPageState extends State<ClinicOverviewPage> {
+
   final ClinicOverviewController _controller = ClinicOverviewImpl();
   final TextEditingController _searchController = TextEditingController();
-  
-  Clinic clinic = new Clinic("1", "Clínica Santa Bárbara", "R. Barros Falcão - nº 365 - Matatu Salvador - BA", "(71) 3233- 3315");
 
   @override
   Widget build(BuildContext context) {
@@ -59,25 +47,31 @@ class _ClinicOverviewPageState extends State<ClinicOverviewPage> {
   }
 
   Widget _clinicInfo() {
-    return Column(
-      children: [
-        Text(clinic.name,
-          style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold
-          ),
-        ),
-        SizedBox(height: 20,),
-        Text(clinic.address),
-        SizedBox(height: 20,),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.phone),
-            Text(clinic.phone,)
-          ],
-        )
-      ],
+    return StreamBuilder<Clinic>(
+        stream: _controller.clinicInfoState,
+        builder: (context, snapshot) {
+          final clinic = snapshot.data;
+          return Column(
+            children: [
+              Text(clinic == null ? "" : clinic.name,
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold
+                ),
+              ),
+              SizedBox(height: 20,),
+              Text(clinic == null ? "" : clinic.address),
+              SizedBox(height: 20,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.phone),
+                  Text(clinic == null ? "" : clinic.phone,)
+                ],
+              )
+            ],
+          );
+        }
     );
   }
 
@@ -99,12 +93,28 @@ class _ClinicOverviewPageState extends State<ClinicOverviewPage> {
   }
 
   Widget _doctorsList() {
-    return ListView.builder(
-      itemCount: list.length,
-      scrollDirection: Axis.vertical,
-      itemBuilder: (context, index) {
-        return list[index];
-      }
+    return StreamBuilder(
+        stream: _controller.doctorListState,
+        initialData: [],
+        builder: (context, snapshot) {
+          final doctorsList = snapshot.data;
+          final doctorsListWidget = doctorsList.map((doctor) {
+            return DoctorCard(doctor.id, doctor.name);
+          }).toList();
+          return ListView.builder(
+              itemCount: doctorsListWidget.length,
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) {
+                return doctorsListWidget[index];
+              }
+          );
+        }
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.onClinicInfoChange(widget.clinicId);
   }
 }

@@ -1,11 +1,13 @@
 import 'package:cline/core/values/cline_colors.dart';
 import 'package:cline/features/queue/queue_screen.dart';
-import 'package:cline/models/doctor.dart';
 import 'package:flutter/material.dart';
 
 class DoctorCard extends StatelessWidget {
 
-  final Doctor doctor = new Doctor(1, "Dr. Fulano de Tal");
+  final String id;
+  final String name;
+
+  DoctorCard(this.id, this.name);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class DoctorCard extends StatelessWidget {
               SizedBox(width: 5,),
               Icon(Icons.verified, color: Colors.green,),
               SizedBox(width: 5,),
-              Text(doctor.name)
+              Text(name)
             ],
           ),
         ),

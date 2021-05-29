@@ -31,4 +31,16 @@ class ClinicService {
 
     return clinics;
   }
+  
+  static Future<dynamic> getClinicOverviewAndDoctors(String clinicId) async {
+    dynamic retorno;
+
+    await http.get(
+      Uri.parse(API.BASE_URL + API.SEARCH_CLINIC + clinicId + "/doctors"),
+    ).then((response) {
+      retorno = jsonDecode(response.body);
+    });
+
+    return retorno;
+  }
 }
