@@ -58,7 +58,7 @@ class QueueImpl extends QueueController {
 
   @override
   void onPatientListChange(String clinicId, String doctorId) {
-    LineService.getLine(clinicId, doctorId)
+    LineService.getPatients(clinicId, doctorId)
         .then((value) {
           print(value);
           _patientListController.sink.add(value);
@@ -68,6 +68,7 @@ class QueueImpl extends QueueController {
   @override
   void dispose() {
     _clinicInfoController.close();
+    _doctorNameController.close();
     _patientListController.close();
   }
 }

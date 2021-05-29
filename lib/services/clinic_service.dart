@@ -10,7 +10,7 @@ class ClinicService {
     List<Clinic> clinics = [];
 
      await http.post(
-        Uri.parse(API.BASE_URL + API.SEARCH_CLINIC),
+        Uri.parse(API.BASE_URL + API.CLINIC_PREFIX),
 
         headers: {
           "Content-Type": "application/json"
@@ -36,7 +36,7 @@ class ClinicService {
     dynamic retorno;
 
     await http.get(
-      Uri.parse(API.BASE_URL + API.SEARCH_CLINIC + clinicId + "/doctors"),
+      Uri.parse(API.BASE_URL + API.CLINIC_PREFIX + clinicId + "/doctors"),
     ).then((response) {
       retorno = jsonDecode(response.body);
     });

@@ -2,6 +2,8 @@ import 'package:cline/core/values/cline_colors.dart';
 import 'package:cline/features/queue/queue_controller.dart';
 import 'package:cline/models/clinic.dart';
 import 'package:cline/models/patient.dart';
+import 'package:cline/services/line_service.dart';
+import 'package:cline/services/queue_service.dart';
 import 'package:cline/widgets/cards/patient_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +22,7 @@ class QueuePage extends StatefulWidget {
 class _QueuePageState extends State<QueuePage> {
 
   final _controller = QueueImpl();
+  String lineId;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +41,8 @@ class _QueuePageState extends State<QueuePage> {
             _doctorView(),
             _listHeader(),
             _divider(),
-            Expanded(child: _queue())
+            Expanded(child: _queue()),
+            _enterInQueue()
           ],
         ),
       ),
@@ -162,11 +166,33 @@ class _QueuePageState extends State<QueuePage> {
     );
   }
 
+  Widget _enterInQueue() {
+    return ElevatedButton(
+        onPressed: () {
+          QueueService.enterInQueue(lineId, "09018099-1ac7-4642-a0eb-07823417f70f")
+          .then((statusCode) {
+            if (statusCode == 201) {
+              _controller.onPatientListChange(widget.clinicId, widget.doctorId);
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("Erro ao entrar na fila!"))
+              );
+            }
+          });
+        },
+        child: Text("Entrar na fila")
+    );
+  }
+
   @override
   void initState() {
     super.initState();
     _controller.onClinicInfoChange(widget.clinicId);
     _controller.onDoctorNameChange(widget.clinicId, widget.doctorId);
     _controller.onPatientListChange(widget.clinicId, widget.doctorId);
+
+    LineService.getLine(widget.clinicId, widget.doctorId).then((value) {
+      lineId = value;
+    });
   }
 }
