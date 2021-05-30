@@ -4,23 +4,30 @@ import 'package:flutter/material.dart';
 class PatientCard extends StatelessWidget {
 
   final String name;
+  final int position;
+  final String waitingTime;
 
-  PatientCard(this.name);
+  PatientCard(this.name, this.position, this.waitingTime);
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: ClineColors.doctor_container,
       child: Container(
         height: 50,
         width: MediaQuery.of(context).size.width,
-        color: ClineColors.doctor_container,
+        color: ClineColors.patient_container,
         child: InkWell(
           onTap: () {},
-          child: Row(
-            children: [
-              Text(name)
-            ],
+          child: Padding(
+            padding: const EdgeInsets.only(left: 32, right: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(position.toString() + "º"),
+                Text(name),
+                Text(waitingTime)
+              ],
+            ),
           ),
         ),
       ),

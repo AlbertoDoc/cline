@@ -10,4 +10,5 @@ class ClineColors {
   static const Color clinic_box = Color(0XFFDDE1FF);
   static const Color specialization_container = Color(0XFF5769FF);
   static const Color doctor_container = Color(0XFFFFF2f2);
+  static const Color patient_container = Color(0XFFE4E4E4);
 }

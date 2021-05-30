@@ -32,6 +32,8 @@ class LineService {
         var body = response.body;
         var patientsJson = jsonDecode(body)["data"]["line"]["patients"];
 
+        print(patientsJson);
+
         for (var item in patientsJson) {
           patients.add(new Patient(
               item["id"], item["waitingTime"], item["name"], item["position"])

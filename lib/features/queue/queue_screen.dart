@@ -153,7 +153,7 @@ class _QueuePageState extends State<QueuePage> {
         builder: (context, snapshot) {
           final listPatient = snapshot.data;
           final listPatientWidget = listPatient.map((item) {
-            return PatientCard(item.name);
+            return PatientCard(item.name, item.position, item.waitingTime);
           }).toList();
           return ListView.builder(
               itemCount: listPatientWidget.length,
