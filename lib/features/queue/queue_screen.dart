@@ -41,7 +41,7 @@ class _QueuePageState extends State<QueuePage> {
             _doctorView(),
             _listHeader(),
             _divider(),
-            Expanded(child: _queue()),
+            _queue(),
             _enterInQueue()
           ],
         ),
@@ -156,6 +156,7 @@ class _QueuePageState extends State<QueuePage> {
             return PatientCard(item.name, item.position, item.waitingTime);
           }).toList();
           return ListView.builder(
+              shrinkWrap: true,
               itemCount: listPatientWidget.length,
               scrollDirection: Axis.vertical,
               itemBuilder: (context, index) {
@@ -167,20 +168,38 @@ class _QueuePageState extends State<QueuePage> {
   }
 
   Widget _enterInQueue() {
-    return ElevatedButton(
-        onPressed: () {
-          QueueService.enterInQueue(lineId, "09018099-1ac7-4642-a0eb-07823417f70f")
-          .then((statusCode) {
-            if (statusCode == 201) {
-              _controller.onPatientListChange(widget.clinicId, widget.doctorId);
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text("Erro ao entrar na fila!"))
-              );
-            }
-          });
-        },
-        child: Text("Entrar na fila")
+    return Padding(
+      padding: const EdgeInsets.only(top: 20),
+      child: ConstrainedBox(
+        constraints: BoxConstraints.tightFor(width: 250, height: 50),
+        child: ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(ClineColors.specialization_container),
+            shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  side: BorderSide(color: ClineColors.specialization_container)
+                )
+            )
+        ),
+          onPressed: () {
+              QueueService.enterInQueue(lineId, "09018099-1ac7-4642-a0eb-07823417f70f")
+              .then((statusCode) {
+                if (statusCode == 201) {
+                  _controller.onPatientListChange(widget.clinicId, widget.doctorId);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Erro ao entrar na fila!"))
+                  );
+                }
+              });
+            },
+            child: Text(
+              "ENTRAR NA FILA",
+              style: TextStyle(fontSize: 18),
+            )
+        ),
+      ),
     );
   }
 
