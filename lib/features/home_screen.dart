@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
       stream: _controller.selectState,
       initialData: [],
       builder: (context, snapshot) {
-        final boxStates = snapshot.data;
+        final boxStates = snapshot.data as List<SelectBoxState>;
         final boxWidgetList = boxStates.map((boxState) {
           if (boxState.selected) _selectedBox = boxState.type;
           return RoundSelectedBox(
@@ -99,23 +99,21 @@ class _HomePageState extends State<HomePage> {
         stream: _controller.listState,
         initialData: [],
         builder: (context, snapshot) {
-          final clinicList = snapshot.data;
+          final clinicList = snapshot.data as List<CustomCard>;
           final clinicWidgetList = clinicList.map((clinicWidget) {
-          return CustomCard(clinicWidget.clinicId, clinicWidget.clinicName);
-        }).toList();
-        return GridView.builder(
-          padding: EdgeInsets.all(5),
-          itemCount: clinicWidgetList.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: Dimens.item_per_row,
-            childAspectRatio: 1,
-          ),
-          itemBuilder: (context, index) {
-            return clinicWidgetList[index];
-          }
-        );
-      }
-    );
+            return CustomCard(clinicWidget.clinicId, clinicWidget.clinicName);
+          }).toList();
+          return GridView.builder(
+              padding: EdgeInsets.all(5),
+              itemCount: clinicWidgetList.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: Dimens.item_per_row,
+                childAspectRatio: 1,
+              ),
+              itemBuilder: (context, index) {
+                return clinicWidgetList[index];
+              });
+        });
   }
 
   Widget _dividerLine(BuildContext context) {

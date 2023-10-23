@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 class CustomCard extends StatelessWidget {
-
   final String clinicId;
   final String clinicName;
 
@@ -19,9 +18,8 @@ class CustomCard extends StatelessWidget {
       padding: const EdgeInsets.all(Dimens.card_padding),
       child: InkWell(
         onTap: () => {
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => ClinicOverviewPage(clinicId))
-          )
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => ClinicOverviewPage(clinicId)))
         },
         child: Card(
           child: Column(
@@ -56,7 +54,7 @@ class CustomCard extends StatelessWidget {
     );
   }
 
-  Widget _cardInfo(BuildContext context, {@required String text}) {
+  Widget _cardInfo(BuildContext context, {required String text}) {
     return Container(
       constraints: Dimens.clinicTextConstraint,
       alignment: Alignment.center,

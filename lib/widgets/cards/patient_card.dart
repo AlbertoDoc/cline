@@ -2,14 +2,14 @@ import 'package:cline/core/values/cline_colors.dart';
 import 'package:flutter/material.dart';
 
 class PatientCard extends StatelessWidget {
-
   final String name;
   final int position;
   final String waitingTime;
-  
+
   String formatedWaitingTime;
 
-  PatientCard(this.name, this.position, this.waitingTime);
+  PatientCard(
+      this.name, this.position, this.waitingTime, this.formatedWaitingTime);
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +25,16 @@ class PatientCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(position.toString() + "º",
+                Text(
+                  position.toString() + "º",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text(name,
+                Text(
+                  name,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text(_formatTime(),
+                Text(
+                  _formatTime(),
                   style: TextStyle(fontWeight: FontWeight.bold),
                 )
               ],

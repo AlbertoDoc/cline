@@ -9,7 +9,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class QueuePage extends StatefulWidget {
-  
   final String doctorId;
   final String clinicId;
 
@@ -20,9 +19,8 @@ class QueuePage extends StatefulWidget {
 }
 
 class _QueuePageState extends State<QueuePage> {
-
   final _controller = QueueImpl();
-  String lineId;
+  String lineId = "";
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +28,20 @@ class _QueuePageState extends State<QueuePage> {
       body: SafeArea(
         child: Column(
           children: [
-            SizedBox(height: 5,),
+            SizedBox(
+              height: 5,
+            ),
             _clinicInfo(),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             Text(
               "Fila de Atendimento",
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 15,),
+            SizedBox(
+              height: 15,
+            ),
             _doctorView(),
             _listHeader(),
             _divider(),
@@ -56,26 +60,29 @@ class _QueuePageState extends State<QueuePage> {
           final clinic = snapshot.data;
           return Column(
             children: [
-              Text(clinic == null ? "" : clinic.name,
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold
-                ),
+              Text(
+                clinic == null ? "" : clinic.name,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               Text(clinic == null ? "" : clinic.address),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.phone),
-                  Text(clinic == null ? "" : clinic.phone,)
+                  Text(
+                    clinic == null ? "" : clinic.phone,
+                  )
                 ],
               )
             ],
           );
-        }
-    );
+        });
   }
 
   Widget _doctorView() {
@@ -83,7 +90,7 @@ class _QueuePageState extends State<QueuePage> {
         stream: _controller.doctorNameState,
         initialData: "",
         builder: (context, snapshot) {
-          final String doctorName = snapshot.data;
+          final String doctorName = snapshot.data as String;
           return Align(
             alignment: Alignment(-1.0, 0.0),
             child: Container(
@@ -94,17 +101,12 @@ class _QueuePageState extends State<QueuePage> {
               ),
               child: Center(
                   child: Text(
-                    doctorName,
-                    style: TextStyle(
-                        color: ClineColors.white,
-                        fontSize: 20
-                    ),
-                  )
-              ),
+                doctorName,
+                style: TextStyle(color: ClineColors.white, fontSize: 20),
+              )),
             ),
           );
-        }
-    );
+        });
   }
 
   Widget _listHeader() {
@@ -148,12 +150,12 @@ class _QueuePageState extends State<QueuePage> {
 
   Widget _queue() {
     return StreamBuilder<List<Patient>>(
-      stream: _controller.patientListState,
+        stream: _controller.patientListState,
         initialData: [],
         builder: (context, snapshot) {
-          final listPatient = snapshot.data;
+          final listPatient = snapshot.data as List<Patient>;
           final listPatientWidget = listPatient.map((item) {
-            return PatientCard(item.name, item.position, item.waitingTime);
+            return PatientCard(item.name, item.position, item.waitingTime, "");
           }).toList();
           return ListView.builder(
               shrinkWrap: true,
@@ -161,10 +163,8 @@ class _QueuePageState extends State<QueuePage> {
               scrollDirection: Axis.vertical,
               itemBuilder: (context, index) {
                 return listPatientWidget[index];
-              }
-          );
-        }
-    );
+              });
+        });
   }
 
   Widget _enterInQueue() {
@@ -173,32 +173,30 @@ class _QueuePageState extends State<QueuePage> {
       child: ConstrainedBox(
         constraints: BoxConstraints.tightFor(width: 250, height: 50),
         child: ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(ClineColors.specialization_container),
-            shape: MaterialStateProperty.all(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  side: BorderSide(color: ClineColors.specialization_container)
-                )
-            )
-        ),
-          onPressed: () {
-              QueueService.enterInQueue(lineId, "09018099-1ac7-4642-a0eb-07823417f70f")
-              .then((statusCode) {
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    ClineColors.specialization_container),
+                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    side: BorderSide(
+                        color: ClineColors.specialization_container)))),
+            onPressed: () {
+              QueueService.enterInQueue(
+                      lineId, "09018099-1ac7-4642-a0eb-07823417f70f")
+                  .then((statusCode) {
                 if (statusCode == 201) {
-                  _controller.onPatientListChange(widget.clinicId, widget.doctorId);
+                  _controller.onPatientListChange(
+                      widget.clinicId, widget.doctorId);
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Erro ao entrar na fila!"))
-                  );
+                      SnackBar(content: Text("Erro ao entrar na fila!")));
                 }
               });
             },
             child: Text(
               "ENTRAR NA FILA",
               style: TextStyle(fontSize: 18),
-            )
-        ),
+            )),
       ),
     );
   }

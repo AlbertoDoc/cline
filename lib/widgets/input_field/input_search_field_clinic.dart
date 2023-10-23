@@ -1,16 +1,12 @@
 import 'package:cline/core/values/cline_colors.dart';
 import 'package:cline/core/values/text_styles.dart';
-import 'package:cline/widgets/select_box/round_selected_box.dart';
 import 'package:flutter/material.dart';
 
 class InputSearchFieldClinic extends StatelessWidget {
   final TextEditingController controller;
   final Function onChanged;
 
-  InputSearchFieldClinic({
-    @required this.controller,
-    @required this.onChanged
-  });
+  InputSearchFieldClinic({required this.controller, required this.onChanged});
 
   void onChangedWrapper(String text) {
     onChanged(controller.text);
@@ -37,7 +33,7 @@ class InputSearchFieldClinic extends StatelessWidget {
     );
   }
 
-  InputBorder _setBorder({@required Color color}) {
+  InputBorder _setBorder({required Color color}) {
     return OutlineInputBorder(
       borderRadius: BorderRadius.all(
         Radius.circular(20),

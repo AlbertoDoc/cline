@@ -9,9 +9,9 @@ class InputSearchField extends StatelessWidget {
   final SelectBoxType selectType;
 
   InputSearchField({
-    @required this.controller,
-    @required this.onChanged,
-    @required this.selectType,
+    required this.controller,
+    required this.onChanged,
+    required this.selectType,
   });
 
   void onChangedWrapper(String text) {
@@ -29,8 +29,8 @@ class InputSearchField extends StatelessWidget {
         contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         hintText: 'Buscar Clínica...',
         hintStyle: TextStyles.hintField,
-        enabledBorder: _setBorder(color: ClineColors.input_border),
-        focusedBorder: _setBorder(color: ClineColors.main_primary),
+        enabledBorder: _setBorder(ClineColors.input_border),
+        focusedBorder: _setBorder(ClineColors.main_primary),
         prefixIcon: Icon(
           Icons.search,
           color: ClineColors.main_primary,
@@ -39,7 +39,7 @@ class InputSearchField extends StatelessWidget {
     );
   }
 
-  InputBorder _setBorder({@required Color color}) {
+  InputBorder _setBorder(Color color) {
     return OutlineInputBorder(
       borderRadius: BorderRadius.all(
         Radius.circular(20),

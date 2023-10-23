@@ -16,11 +16,11 @@ class RoundSelectedBox extends StatelessWidget {
   final bool selected;
 
   RoundSelectedBox({
-    @required this.type,
-    @required this.tapHandler,
-    @required this.searchHandler,
-    @required this.searchController,
-    @required this.selected,
+    required this.type,
+    required this.tapHandler,
+    required this.searchHandler,
+    required this.searchController,
+    required this.selected,
   });
 
   void _tapHandlerWrapper() {
