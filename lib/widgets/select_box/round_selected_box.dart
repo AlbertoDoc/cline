@@ -61,13 +61,13 @@ class RoundSelectedBox extends StatelessWidget {
     String info;
     switch (type) {
       case SelectBoxType.clinic:
-        info = 'Clínica';
+        info = 'Universidade';
         break;
       case SelectBoxType.doctor:
-        info = 'Médico';
+        info = 'Coordenador';
         break;
       default:
-        info = 'Especialidade';
+        info = 'Faculdade';
         break;
     }
 
@@ -81,13 +81,13 @@ class RoundSelectedBox extends StatelessWidget {
     IconData icon;
     switch (type) {
       case SelectBoxType.clinic:
-        icon = Icons.home;
+        icon = Icons.domain;
         break;
       case SelectBoxType.doctor:
-        icon = Icons.medical_services;
+        icon = Icons.person;
         break;
       default:
-        icon = Icons.mediation;
+        icon = Icons.school;
         break;
     }
     return Icon(
